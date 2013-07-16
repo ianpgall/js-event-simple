@@ -9,10 +9,10 @@ var addEvent = (function () {
 	attachGenerator = function (el, cb) {
 		var ret;
 		ret = function (e) {
-			var cbRet;
+			var result;
 			e = e || window.event;
-			cbRet = cb.call(el, e);
-			if (cbRet === false) {
+			result = cb.call(el, e);
+			if (result === false) {
 				if (e.preventDefault) {
 					e.preventDefault();
 				} else {
