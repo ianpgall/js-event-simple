@@ -1,5 +1,5 @@
 var addEvent = (function () {
-  "use strict";
+	"use strict";
 
 	var tester, allHandlers, attachGenerator, addFunc, removeFunc;
 
@@ -9,8 +9,21 @@ var addEvent = (function () {
 	attachGenerator = function (el, cb) {
 		var ret;
 		ret = function (e) {
+			var cbRet;
 			e = e || window.event;
-			cb.call(el, e);
+			cbRet = cb.call(el, e);
+			if (cbRet === false) {
+				if (e.preventDefault) {
+					e.preventDefault();
+				} else {
+					e.returnValue = false;
+				}
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				} else {
+					e.cancelBubble = true;
+				}
+			}
 		};
 		return ret;
 	};
